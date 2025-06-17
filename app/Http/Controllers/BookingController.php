@@ -46,7 +46,7 @@ class BookingController extends Controller
         }
         else{
             $vendor = Vendor::where('user_id', Auth::id())->first();
-            $services = $vendor->services;
+            $services = $vendor->services()->where('status','active')->get();
             $staff = $vendor->staffs;
         }
 
@@ -110,7 +110,7 @@ class BookingController extends Controller
     {
         $this->authorize('update', $booking);
         $vendor = Vendor::where('user_id', Auth::id())->first();
-        $services = $vendor->services;
+        $services = $vendor->services()->where('status','active')->get();
         $staff = $vendor->staffs; 
         return view('bookings.edit', compact('booking', 'services', 'staff'));
     }
