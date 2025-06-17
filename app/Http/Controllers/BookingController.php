@@ -109,8 +109,9 @@ class BookingController extends Controller
     public function edit(Booking $booking)
     {
         $this->authorize('update', $booking);
-        $services = Service::where('status', 'active')->get();
-        $staff = User::where('role', 'staff')->get();
+        $vendor = Vendor::where('user_id', Auth::id())->first();
+        $services = $vendor->services;
+        $staff = $vendor->staffs; 
         return view('bookings.edit', compact('booking', 'services', 'staff'));
     }
 
